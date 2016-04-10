@@ -1,11 +1,19 @@
 package ConnectionServer.UnitTests;
 
+import Common.HttpResponse;
 import Common.MimeType;
 import ConnectionServer.HttpResponseFactory;
 import ConnectionServer.HttpStatusCode;
+import ConnectionServer.Wrappers.HttpStatusService;
+import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
+
+import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNot.not;
+import static org.junit.Assert.assertThat;
 
 /**
  * Author: Keith Jackson
@@ -23,7 +31,7 @@ public class HttpResponseFactoryShould {
 
     @Before
     public void setUp() {
-        factory = new HttpResponseFactory();
+        factory = new HttpResponseFactory(new HttpStatusService());
 
     }
 
@@ -33,8 +41,12 @@ public class HttpResponseFactoryShould {
     }
 
     @Test
-    public void returnAnOKResponseToRoot() {
-        factory.protocol("http").version("1.1").status(HttpStatusCode.OK).contentType(MimeType.text).body(null);
+    public void returnAnOKResponseToRoot() throws InvalidArgumentException {
+        HttpResponse response = factory.protocol("http").version("1.1").status(HttpStatusCode.OK)
+                .contentType(MimeType.text).body(null).build();
+
+        assertThat(response.toString(), is(not(equalTo(null))));
+
     }
 
 }

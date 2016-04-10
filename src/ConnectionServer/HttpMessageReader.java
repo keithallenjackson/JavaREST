@@ -22,8 +22,12 @@ public class HttpMessageReader extends BufferedReader {
         StringBuilder builder = new StringBuilder();
 
         String line;
-        while((line = readLine()) != null && !line.isEmpty()) {
-            builder.append(line);
+        int emptyLines = 0;
+        while((line = readLine()) != null && emptyLines < 2) {
+            if(line.isEmpty())
+                emptyLines++;
+            else
+                builder.append(line);
         }
 
         return builder.toString();

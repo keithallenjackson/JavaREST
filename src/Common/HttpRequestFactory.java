@@ -1,4 +1,4 @@
-package ConnectionServer;
+package Common;
 
 import ConnectionServer.Framework.IRequest;
 import ConnectionServer.Framework.HttpRequestParseException;
@@ -76,7 +76,7 @@ public class HttpRequestFactory {
 
         // cleanup values
         for (int i = 0; i < values.length; i++) {
-            values[i].trim();
+            values[i] = values[i].trim();
         }
 
         headers.put(key, values);

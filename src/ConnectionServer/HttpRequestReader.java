@@ -1,5 +1,6 @@
 package ConnectionServer;
 
+import Common.HttpRequestFactory;
 import ConnectionServer.Framework.IRequest;
 import ConnectionServer.Framework.HttpRequestParseException;
 import Common.Framework.Verb;

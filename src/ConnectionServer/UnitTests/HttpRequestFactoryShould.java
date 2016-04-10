@@ -3,7 +3,7 @@ package ConnectionServer.UnitTests;
 import ConnectionServer.Framework.IRequest;
 import ConnectionServer.Framework.HttpRequestParseException;
 import Common.Framework.Verb;
-import ConnectionServer.HttpRequestFactory;
+import Common.HttpRequestFactory;
 import org.junit.Before;
 import org.junit.Test;
 
