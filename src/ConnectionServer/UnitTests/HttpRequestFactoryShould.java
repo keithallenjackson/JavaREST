@@ -4,6 +4,7 @@ import ConnectionServer.Framework.IRequest;
 import ConnectionServer.Framework.HttpRequestParseException;
 import Common.Framework.Verb;
 import Common.HttpRequestFactory;
+import com.sun.deploy.net.HttpRequest;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -12,6 +13,7 @@ import java.util.Map;
 
 import static org.hamcrest.core.Is.is;
 import static org.hamcrest.core.IsEqual.equalTo;
+import static org.hamcrest.core.IsNot.not;
 import static org.junit.Assert.assertThat;
 
 /**
@@ -145,5 +147,22 @@ public class HttpRequestFactoryShould {
     @Test(expected = HttpRequestParseException.class)
     public void throwExceptionWhenBuildIsCalledWithInvalidUri() throws HttpRequestParseException {
         factory.uri("@#fSDF23wfsfda@#4").build();
+    }
+
+    @Test
+    public void generateIRequsetCapableOfEqualityComparison() throws HttpRequestParseException {
+        IRequest req1 = factory.protocol("http").hostname("google.com").uri("/").version("1.1").verb("get").build();
+        IRequest req2 = factory.build();
+
+        assertThat(req1, is(equalTo(req2)));
+        assertThat(req1.equals(req2), is(equalTo(true)));
+    }
+
+    @Test
+    public void generateADifferentIRequestEveryTimeBuildIsCalled() throws HttpRequestParseException {
+        IRequest req1 = factory.protocol("http").hostname("google.com").uri("/").version("1.1").verb("get").build();
+        IRequest req2 = factory.build();
+
+        assertThat(req2.hashCode(), is(not(equalTo(req1.hashCode()))));
     }
 }
