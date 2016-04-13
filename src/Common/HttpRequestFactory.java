@@ -1,6 +1,6 @@
 package Common;
 
-import ConnectionServer.Framework.IRequest;
+import ConnectionServer.Framework.HttpRequest;
 import ConnectionServer.Framework.HttpRequestParseException;
 import Common.Framework.Verb;
 
@@ -28,6 +28,11 @@ public class HttpRequestFactory {
 
     public HttpRequestFactory verb(String verb) {
         this.verb = verb;
+        return this;
+    }
+
+    public HttpRequestFactory verb(Verb verb) {
+        this.verb = verb.name();
         return this;
     }
 
@@ -84,7 +89,7 @@ public class HttpRequestFactory {
         return this;
     }
 
-    public IRequest build() throws HttpRequestParseException {
+    public HttpRequest build() throws HttpRequestParseException {
         if(verb == null || uri == null || protocol == null || version == null || hostname == null)
             throw new HttpRequestParseException("verb|uri|protocol|version|hostname cannot be null");
 
@@ -93,7 +98,7 @@ public class HttpRequestFactory {
             final URI parsedUri = URI.create(uri.trim());
 
 
-            return new IRequest() {
+            return new HttpRequest() {
                 @Override
                 public Verb getVerb() {
                     return parsedVerb;
@@ -127,13 +132,22 @@ public class HttpRequestFactory {
                 @Override
                 public String toString() {
                     StringBuilder builder = new StringBuilder();
-                    builder.append(this.getVerb().name() + " " + getUri().getPath() + " " + protocol + "/" + version);
+                    builder.append(this.getVerb().name())
+                            .append(" ")
+                            .append(getUri().getPath())
+                            .append(" ")
+                            .append(protocol)
+                            .append("/")
+                            .append(version);
                     builder.append("\r\n");
-                    builder.append("Hostname: " + getHostname());
+                    builder.append("Hostname: ")
+                            .append(getHostname());
                     builder.append("\r\n");
 
                     for(String key : headers.keySet()) {
-                        builder.append(key + ": " + String.join(", ", headers.get(key)).trim());
+                        builder.append(key)
+                                .append(": ")
+                                .append(String.join(", ", headers.get(key)).trim());
                         builder.append("\r\n");
                     }
                     builder.append("\r\n");

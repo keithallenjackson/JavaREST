@@ -1,10 +1,9 @@
 package ConnectionServer.UnitTests;
 
-import ConnectionServer.Framework.IRequest;
+import ConnectionServer.Framework.HttpRequest;
 import ConnectionServer.Framework.HttpRequestParseException;
 import Common.Framework.Verb;
 import Common.HttpRequestFactory;
-import com.sun.deploy.net.HttpRequest;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -41,8 +40,8 @@ public class HttpRequestFactoryShould {
 
     @Test
     public void generateAValidIResponse() throws HttpRequestParseException{
-        IRequest sut = factory.verb("get").uri("/").protocol("HTTP").version("1.1").hostname("google.com").build();
-        IRequest comp = new IRequest() {
+        HttpRequest sut = factory.verb("get").uri("/").protocol("HTTP").version("1.1").hostname("google.com").build();
+        HttpRequest comp = new HttpRequest() {
             @Override
             public Verb getVerb() {
                 return Verb.GET;
@@ -82,7 +81,7 @@ public class HttpRequestFactoryShould {
 
     @Test
     public void separateProtocolAndVersion() throws HttpRequestParseException {
-        IRequest sut = factory.protocolAndVersion("HTTP/1.1")
+        HttpRequest sut = factory.protocolAndVersion("HTTP/1.1")
                 .build();
 
         assertThat(sut.getProtocol(), is(equalTo("HTTP")));
@@ -92,7 +91,7 @@ public class HttpRequestFactoryShould {
     @Test
     public void seperateHeaderFromHeaderString() throws HttpRequestParseException {
         String headerString = "X-Custom-Header: SomeValue";
-        IRequest sut = factory.header(headerString).build();
+        HttpRequest sut = factory.header(headerString).build();
 
         assertThat(sut.getHeaders().get("X-Custom-Header")[0], is(equalTo("SomeValue")));
 
@@ -104,7 +103,7 @@ public class HttpRequestFactoryShould {
         String key = "X-Custom-Header";
         String[] values = new String[] {"One", "Two", "Three"};
 
-        IRequest sut = factory.header(key, values).build();
+        HttpRequest sut = factory.header(key, values).build();
 
         assertThat(sut.getHeaders().get(key), is(equalTo(values)));
     }
@@ -151,8 +150,8 @@ public class HttpRequestFactoryShould {
 
     @Test
     public void generateIRequsetCapableOfEqualityComparison() throws HttpRequestParseException {
-        IRequest req1 = factory.protocol("http").hostname("google.com").uri("/").version("1.1").verb("get").build();
-        IRequest req2 = factory.build();
+        HttpRequest req1 = factory.protocol("http").hostname("google.com").uri("/").version("1.1").verb("get").build();
+        HttpRequest req2 = factory.build();
 
         assertThat(req1, is(equalTo(req2)));
         assertThat(req1.equals(req2), is(equalTo(true)));
@@ -160,8 +159,8 @@ public class HttpRequestFactoryShould {
 
     @Test
     public void generateADifferentIRequestEveryTimeBuildIsCalled() throws HttpRequestParseException {
-        IRequest req1 = factory.protocol("http").hostname("google.com").uri("/").version("1.1").verb("get").build();
-        IRequest req2 = factory.build();
+        HttpRequest req1 = factory.protocol("http").hostname("google.com").uri("/").version("1.1").verb("get").build();
+        HttpRequest req2 = factory.build();
 
         assertThat(req2.hashCode(), is(not(equalTo(req1.hashCode()))));
     }

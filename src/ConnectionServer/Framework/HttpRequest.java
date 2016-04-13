@@ -15,7 +15,7 @@ import java.util.Map;
  * File:
  * Description:
  */
-public interface IRequest {
+public interface HttpRequest {
     Verb getVerb();
     URI getUri();
     String getHostname();

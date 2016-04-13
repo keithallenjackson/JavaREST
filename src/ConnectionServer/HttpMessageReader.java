@@ -23,11 +23,14 @@ public class HttpMessageReader extends BufferedReader {
 
         String line;
         int emptyLines = 0;
-        while((line = readLine()) != null && emptyLines < 2) {
+        while(emptyLines < 1 && (line = readLine()) != null) {
             if(line.isEmpty())
                 emptyLines++;
-            else
+            else {
                 builder.append(line);
+                builder.append("\r\n");
+            }
+
         }
 
         return builder.toString();

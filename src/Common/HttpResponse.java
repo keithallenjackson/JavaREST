@@ -65,6 +65,10 @@ public class HttpResponse {
         if(body != null) {
             contentType = contentType == null ? MimeType.bin : contentType;
 
+            builder.append("Content-Type: ");
+            builder.append(contentType.contentType);
+            builder.append("\r\n");
+
             if(!isChunkedEncoding()) {
                 builder.append("Content-Length: ");
                 builder.append(body.getSize());
@@ -100,18 +104,19 @@ public class HttpResponse {
     }
 
     private boolean isChunkedEncoding() {
-        return body != null && body.getBodyInputStream() != null && body.getSize() > -1;
+        return body != null && body.getBodyInputStream() != null && body.getSize() < 0;
     }
 
     public void write(OutputStream out) throws IOException{
         out.write(toString().getBytes());
-
+        out.write("\r\n".getBytes());
         if(isChunkedEncoding()) {
             writeBodyChunked(out);
         } else {
             writeBody(out);
         }
 
+        out.write("\r\n".getBytes());
     }
 
     private void writeBody(OutputStream out) throws IOException{
@@ -146,6 +151,8 @@ public class HttpResponse {
 
             out.write("\r\n".getBytes());
         }
+
+        out.write(Integer.toHexString(0).getBytes());
 
         out.write("\r\n".getBytes());
     }

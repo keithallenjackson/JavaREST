@@ -32,40 +32,40 @@ public class HttpResponseFactory {
     private HttpStatusService statusService;
     private Map<String, List<String>> headers;
 
-    public HttpResponseFactory(@NotNull HttpStatusService statusService) {
+    public HttpResponseFactory(HttpStatusService statusService) {
         this.statusService = statusService;
         this.headers = new LinkedHashMap<>();
     }
 
-    public HttpResponseFactory protocol(String protocol) throws InvalidArgumentException {
-        if(protocol == null || protocol.isEmpty()) throw new InvalidArgumentException(new String[] {"protocol"});
-        this.protocol = protocol;
+    public HttpResponseFactory protocol(String protocol) throws IllegalArgumentException {
+        if(protocol == null || protocol.isEmpty()) throw new IllegalArgumentException("protocol");
+        this.protocol = protocol.toUpperCase().trim();
         return this;
     }
 
-    public HttpResponseFactory version(@NotNull String version) throws InvalidArgumentException{
-        if(version.isEmpty()) throw new InvalidArgumentException(new String[] {"version"});
+    public HttpResponseFactory version(String version) throws IllegalArgumentException{
+        if(version.isEmpty()) throw new IllegalArgumentException("version");
         this.version = version;
         return this;
     }
 
-    public HttpResponseFactory status(@NotNull HttpStatus status) {
+    public HttpResponseFactory status(HttpStatus status) {
         this.status = status;
         return this;
     }
 
-    public HttpResponseFactory status(HttpStatusCode code) throws InvalidArgumentException {
+    public HttpResponseFactory status(HttpStatusCode code) throws IllegalArgumentException {
         HttpStatus httpStatus = statusService.get(code);
-        if(httpStatus == null) throw new InvalidArgumentException(new String[] {"code"});
+        if(httpStatus == null) throw new IllegalArgumentException("code");
         return status(httpStatus);
     }
 
-    public HttpResponseFactory contentType(@NotNull MimeType type) {
+    public HttpResponseFactory contentType(MimeType type) {
         contentType = type;
         return this;
     }
 
-    public HttpResponseFactory body(@NotNull HttpResponseBody body) {
+    public HttpResponseFactory body(HttpResponseBody body) {
         this.body = body;
         return this;
     }

@@ -1,7 +1,7 @@
 package ConnectionServer;
 
 import Common.HttpRequestFactory;
-import ConnectionServer.Framework.IRequest;
+import ConnectionServer.Framework.HttpRequest;
 import ConnectionServer.Framework.HttpRequestParseException;
 import Common.Framework.Verb;
 import com.sun.istack.internal.NotNull;
@@ -26,7 +26,7 @@ public class HttpRequestReader {
         this.reader = reader;
     }
 
-    public IRequest readRequest() throws IOException, HttpRequestParseException {
+    public HttpRequest readRequest() throws IOException, HttpRequestParseException {
         try {
 
             HttpRequestFactory factory = new HttpRequestFactory();
@@ -41,12 +41,23 @@ public class HttpRequestReader {
             //perform validation on top line parts
             if(topLineParts.length != 3) throw new HttpRequestParseException();
 
-            factory.verb(topLineParts[0]).uri(topLineParts[1]).protocolAndVersion(topLineParts[3]);
+            factory.verb(topLineParts[0]).uri(topLineParts[1]).protocolAndVersion(topLineParts[2]);
+
+            for (int i = 1; i < lines.length; i++) {
+                String[] headerPieces = lines[i].split(":");
+                String header = headerPieces[0];
+                String[] values = headerPieces[1].split(",");
+
+                if(header.equalsIgnoreCase("Host")) {
+                    factory.hostname(values[0]);
+                }
+                else {
+                    factory.header(header, values);
+                }
+            }
 
 
-
-            Verb verb = getVerbFromString(totalRequest);
-            return null;
+            return factory.build();
         }catch(IllegalArgumentException e) {
             throw new HttpRequestParseException();
         }

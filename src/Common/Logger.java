@@ -41,11 +41,15 @@ public class Logger {
     }
 
     protected void write(String entry) {
-        byte[] entryBytes = entry.getBytes();
+        byte[] entryBytes = (entry + "\r\n").getBytes();
         try {
             out.write(entryBytes);
         } catch(IOException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
+    }
+
+    public void log(String message) {
+        write(message);
     }
 }

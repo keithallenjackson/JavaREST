@@ -66,25 +66,6 @@ public class UriStringParserShould {
     }
 
     @Test
-    public void findOneVariableGivenASingleVariableString() {
-        parser.pattern(oneVariableString);
-        String[] variables = parser.getVariables();
-
-        assertThat(variables.length, is(1));
-        assertThat(variables[0], is(equalTo("{version}")));
-    }
-
-    @Test
-    public void findTwoSegmentsInSingleVariableString() {
-        parser.pattern(oneVariableString);
-        String[] segments = parser.getSegments();
-
-        assertThat(segments.length, is(2));
-        assertThat(segments[0], is(equalTo("/api/")));
-        assertThat(segments[1], is(equalTo("/todo")));
-    }
-
-    @Test
     public void matchDynamicStringWithVariableInserted() {
         parser.pattern(oneVariableString);
         assertThat(parser.isMatch("/api/3/todo"), is(true));
@@ -120,4 +101,40 @@ public class UriStringParserShould {
         assertThat(parser.isMatch("/index/32523325/34627243534/"), is(true));
     }
 
+    @Test
+    public void pullVariableValueBasedOnPattern() {
+        parser.pattern(oneVariableString);
+        assertThat(parser.getVariable("/api/223/todo", "version"), is(equalTo("223")));
+    }
+
+    @Test
+    public void pullTwoVariableValuesBasedOnPattern() {
+        parser.pattern("/Index/{Big1}/{Big4}//");
+        String uri = "/index/556421/bigString/";
+        assertThat(parser.getVariable(uri, "Big1"), is(equalTo("556421")));
+        assertThat(parser.getVariable(uri, "Big4"), is(equalTo("bigString")));
+    }
+
+    @Test
+    public void pullTowVariableValuesBaseOnPatternWithForgivingForwardSlash() {
+        parser.pattern("/Index/{Big123}/{Big78}/");
+        String uri = "/index/99333/2340";
+
+        assertThat(parser.getVariable(uri, "Big123"), is(equalTo("99333")));
+        assertThat(parser.getVariable(uri, "Big78"), is(equalTo("2340")));
+
+    }
+
+    @Test
+    public void notCareAboutAMissingForwardSlashAtTheBeginning() {
+        parser.pattern("Index/{Var1}/bigbreakfast");
+        assertThat(parser.isMatch("/index/123/bigbreakfast"), is(true));
+        assertThat(parser.getVariable("/index/123/bigbreakfast", "Var1"), is(equalTo("123")));
+    }
+
+    @Test
+    public void notMatchAUriLongerThanThePattern() {
+        parser.pattern("//");
+        assertThat(parser.isMatch("/api/test1"), is(false));
+    }
 }

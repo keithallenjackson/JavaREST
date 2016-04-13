@@ -3,6 +3,7 @@ package ConnectionServer.Framework;
 import java.text.ParseException;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,18 +19,30 @@ import java.util.regex.Pattern;
  */
 public class UriStringParser {
 
-    private String pattern;
+    //private String pattern;
+    private String[] segments;
+    private String[] variables;
+
+    private Pattern patternMatcherRegEx;
 
     private Pattern regExFindSegments = Pattern.compile("(?!(\\{)*[A-Za-z0-9_]*}).?[^{]+");
 
     private Pattern regExFindVariables = Pattern.compile("(\\{[A-Za-z0-9_]+\\})");
 
+    private Pattern endOfUri = Pattern.compile("(?!\\/)([A-Za-z0-9_&%]+)$", Pattern.CASE_INSENSITIVE);
+
 
 
     public void pattern(String pattern) {
 
-        this.pattern = pattern != null ? pattern.trim() : null;
-        this.pattern = fixTrailingForwardSlash(this.pattern);
+        if(pattern != null) {
+            String pat = fixTrailingForwardSlash(pattern.trim());
+            segments = getSegments(pat);
+            variables = getVariables(pat);
+            patternMatcherRegEx = Pattern.compile(generateRegExFromPattern(), Pattern.CASE_INSENSITIVE);
+        }
+
+
 
     }
 
@@ -39,15 +52,23 @@ public class UriStringParser {
 
         String sut = o.trim();
 
+        return patternMatcherRegEx.matcher(sut).find();
+
+
+        //return o != null &&
+        //        pattern.equalsIgnoreCase(o.trim()) && !o.isEmpty();
+    }
+
+    private String generateRegExFromPattern() {
         StringBuilder builder = new StringBuilder();
 
-        String[] segments = getSegments();
-        String[] variables = getVariables();
+        int insertedVariables = 0;
 
         for(String segment : segments) {
             builder.append(Pattern.quote(segment));
-            if(variables.length > 0) {
+            if(variables.length > 0 && insertedVariables < variables.length) {
                 builder.append("([A-Za-z0-9_%&]*)");
+                insertedVariables++;
             }
         }
 
@@ -55,22 +76,14 @@ public class UriStringParser {
 
         builder.append("$");
 
-        String generatedRegEx = builder.toString();
-
-        Pattern regEx = Pattern.compile(generatedRegEx, Pattern.CASE_INSENSITIVE);
-
-        return regEx.matcher(sut).find();
-
-
-        //return o != null &&
-        //        pattern.equalsIgnoreCase(o.trim()) && !o.isEmpty();
+        return builder.toString();
     }
 
-    public String[] getVariables() {
+    private String[] getVariables(String pattern) {
         return getMatches(regExFindVariables, pattern);
     }
 
-    public String[] getSegments() {
+    private String[] getSegments(String pattern) {
 
         return getMatches(regExFindSegments, pattern);
     }
@@ -91,5 +104,22 @@ public class UriStringParser {
 
     private String fixTrailingForwardSlash(String o) {
         return lastCharacterIsForwardSlash(o) ? o.substring(0, o.length() - 1) : o;
+    }
+
+    public String getVariable(String s, String name) {
+        int index;
+        if(isMatch(s) && (index = variableIndex(name)) >= 0) {
+                Matcher matcher = patternMatcherRegEx.matcher(s);
+                return matcher.find() ? matcher.group(index + 1) : null;
+        }
+        return null;
+    }
+
+    private int variableIndex(String name) {
+        for(int i = 0; i < variables.length; i++) {
+            if(variables[i].contentEquals("{" + name + "}"))
+                return i;
+        }
+        return -1;
     }
 }
