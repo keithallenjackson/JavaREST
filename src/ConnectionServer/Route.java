@@ -1,12 +1,9 @@
 package ConnectionServer;
 
 import Common.HttpResponse;
-import ConnectionServer.Framework.HttpRequest;
+import Common.Framework.HttpRequest;
 import ConnectionServer.Framework.RouteFunction;
 import ConnectionServer.Framework.UriStringParser;
-import com.sun.istack.internal.NotNull;
-
-import java.net.URI;
 
 /**
  * Author: Keith Jackson

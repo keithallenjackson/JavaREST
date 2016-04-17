@@ -1,16 +1,21 @@
 package ConnectionServer.UnitTests;
+import Common.Framework.LogFormatter;
+import Common.Logger;
 import ConnectionServer.Framework.IExecutorService;
-import ConnectionServer.Framework.OnAcceptListener;
 import ConnectionServer.Framework.ServerSocketWrapper;
 import ConnectionServer.Listener;
+import com.sun.istack.internal.NotNull;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.mockito.stubbing.Answer;
 
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.core.Is.is;
 import static org.mockito.Mockito.*;
 
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.Socket;
 
 /**
@@ -25,18 +30,37 @@ import java.net.Socket;
  */
 public class ListenerShould {
 
+    public class ListenerTest extends Listener {
+
+        private boolean called = false;
+
+        public ListenerTest(@NotNull ServerSocketWrapper wrapper,
+                            @NotNull IExecutorService executor,
+                            @NotNull Logger logger) {
+            super(wrapper, executor, logger);
+        }
+
+        @Override
+        public void handleRequest(Socket socket) {
+            called = true;
+        }
+
+        public boolean handleRequestWasCalled() { return called; }
+    }
+
     private ServerSocketWrapper serverSocketWrapper;
     private IExecutorService service;
-    private OnAcceptListener lambda;
-    private Listener listener;
+    private ListenerTest listener;
+    private Logger logger;
 
 
     @Before
     public void setup() {
         serverSocketWrapper = mock(ServerSocketWrapper.class);
         service = mock(IExecutorService.class);
-        lambda = mock(OnAcceptListener.class);
-        listener = new Listener(serverSocketWrapper, lambda, service);
+        logger = new Logger(mock(OutputStream.class), mock(LogFormatter.class));
+        listener = new ListenerTest(serverSocketWrapper, service, logger);
+
     }
 
     @After
@@ -60,7 +84,7 @@ public class ListenerShould {
         verify(service, atLeast(1)).execute(any(Runnable.class));
         verify(serverSocketWrapper, atLeast(1)).accept();
         verify(service, atLeast(1)).shutdown();
-        verify(lambda, atLeast(1)).Handle(any(Socket.class));
+        assertThat(listener.handleRequestWasCalled(), is(true));
     }
 
 

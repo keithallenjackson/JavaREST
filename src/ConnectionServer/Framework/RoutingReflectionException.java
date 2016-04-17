@@ -1,4 +1,4 @@
-package Common.Framework;
+package ConnectionServer.Framework;
 
 /**
  * Author: Keith Jackson
@@ -6,10 +6,9 @@ package Common.Framework;
  * Semester: Fall 2015
  * Project:
  * <p>
- * Date: 3/30/2016
+ * Date: 4/16/2016
  * File:
  * Description:
  */
-public enum Verb {
-    GET, PUT, POST, DELETE, UPDATE, ANY
+public class RoutingReflectionException extends Exception {
 }

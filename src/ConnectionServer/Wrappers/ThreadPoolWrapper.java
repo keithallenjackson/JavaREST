@@ -2,7 +2,9 @@ package ConnectionServer.Wrappers;
 
 import ConnectionServer.Framework.IExecutorService;
 
+import java.util.List;
 import java.util.concurrent.ExecutorService;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Author: Keith Jackson
@@ -31,5 +33,15 @@ public class ThreadPoolWrapper implements IExecutorService {
     @Override
     public void shutdown() {
         service.shutdown();
+    }
+
+    @Override
+    public void awaitTermination(long time, TimeUnit unit) throws InterruptedException {
+        service.awaitTermination(time, unit);
+    }
+
+    @Override
+    public List<Runnable> shutdownNow() {
+        return service.shutdownNow();
     }
 }

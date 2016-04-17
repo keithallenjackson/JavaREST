@@ -3,7 +3,7 @@ package ConnectionServer;
 import Common.HttpResponse;
 import Common.HttpResponseBody;
 import Common.MimeType;
-import ConnectionServer.Framework.HttpRequest;
+import Common.Framework.HttpRequest;
 import ConnectionServer.Framework.RouteFunction;
 import ConnectionServer.Wrappers.HttpStatusService;
 
@@ -24,6 +24,7 @@ import java.util.*;
 public class Router {
     //List<Route> routes = new LinkedList<>();
     private Map<String, Route> routes = new LinkedHashMap<>();
+    private Map<HttpStatus, Route> defaultRoutes = new LinkedHashMap<>();
 
     public String add(Route route) {
         String uuid = UUID.randomUUID().toString().replaceAll("-", "");
@@ -67,5 +68,9 @@ public class Router {
                     @Override
                     public long getSize() { return size; }
         }).build();
+    }
+
+    public void setDefaultRoute(HttpStatus status, Route route) {
+        defaultRoutes.put(status, route);
     }
 }

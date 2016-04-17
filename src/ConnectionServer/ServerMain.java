@@ -1,17 +1,12 @@
 package ConnectionServer;
 
 import Common.*;
-import ConnectionServer.Framework.HttpRequestParseException;
 import ConnectionServer.Wrappers.HttpStatusService;
 import ConnectionServer.Wrappers.ServerSocketWrap;
 import ConnectionServer.Wrappers.ThreadPoolWrapper;
-import com.sun.deploy.xml.XMLParser;
-import com.sun.xml.internal.bind.annotation.OverrideAnnotationOf;
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.List;
 
 import java.io.*;
 import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadPoolExecutor;
 
 /**
  * Author: Keith Jackson
@@ -25,6 +20,10 @@ import java.util.concurrent.ThreadPoolExecutor;
  */
 public class ServerMain {
     public static void main(String[] args) throws IOException {
+
+        int port = args.length > 0 ? Integer.parseInt(args[0]) : 8080;
+
+
         Logger logger = new OutputLogger(new TabLogFormatter());
 
         Router router = new Router();
@@ -57,64 +56,16 @@ public class ServerMain {
                     }).build();
         });
 
-        Listener listener = new Listener(new ServerSocketWrap(9001),
-                (socket) -> {
-                    logger.log("Connection Accepted");
-                    try {
-                        HttpRequestReader reader = new HttpRequestReader(
-                                new HttpMessageReader(socket.getInputStream()));
-                        router.route(reader.readRequest()).write(socket.getOutputStream());
-                        logger.log("successful response sent");
-
-                    } catch (IOException e) {
-                        logger.log(e);
-                    } catch (HttpRequestParseException e) {
-                        try {
-                            new HttpResponseFactory(statusService)
-                                    .status(HttpStatusCode.BAD_REQUEST)
-                                    .contentType(MimeType.html)
-                                    .protocol("http")
-                                    .version("1.1")
-                                    .body(new HttpResponseBody() {
-                                        String builder = "<!DOCTYPE html>\r\n" +
-                                                "<html>\r\n" +
-                                                "<head>\r\n" +
-                                                "<title>Bad Request!</title>\r\n" +
-                                                "</head>\r\n<body>\r\n" +
-                                                "<h1>Bad Request</h1>\r\n" +
-                                                "<p>Bad Request Received</p>\r\n" +
-                                                "</body>\r\n</html>";
-                                        ByteArrayInputStream stream = new ByteArrayInputStream(builder.getBytes());
-                                        long size = builder.getBytes().length;
-                                        @Override
-                                        public InputStream getBodyInputStream() {
-
-                                            return (new ByteArrayInputStream(builder.getBytes()));
-                                        }
-
-                                        @Override
-                                        public long getSize() { return size; }
-
-                                    }).build().write(socket.getOutputStream());
-                            logger.log("Send Bad Request Response");
-                        } catch(IOException ex) {
-                            logger.log(ex);
-                        }
-                    } finally{
-                        try {
-                            socket.close();
-                            logger.log("Connection Closed");
-                        } catch(IOException e) {
-                            // nothing to do
-                        }
-                    }
-
-                }, new ThreadPoolWrapper(Executors.newCachedThreadPool()));
+        HttpListener listener = new HttpListener(new ServerSocketWrap(port),
+                new ThreadPoolWrapper(Executors.newCachedThreadPool()),
+                router,
+                logger,
+                statusService);
 
         listener.start();
         waitForChar('q');
-        listener.interrupt();
-
+        logger.log("Shutting Down");
+        listener.shutdown();
 
     }
 

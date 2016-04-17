@@ -1,8 +1,8 @@
 package ConnectionServer;
 
 import Common.HttpRequestFactory;
-import ConnectionServer.Framework.HttpRequest;
-import ConnectionServer.Framework.HttpRequestParseException;
+import Common.Framework.HttpRequest;
+import Common.Framework.HttpRequestParseException;
 import Common.Framework.Verb;
 import com.sun.istack.internal.NotNull;
 

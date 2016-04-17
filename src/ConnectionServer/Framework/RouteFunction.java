@@ -1,5 +1,6 @@
 package ConnectionServer.Framework;
 
+import Common.Framework.HttpRequest;
 import Common.HttpResponse;
 
 /**

@@ -1,4 +1,4 @@
-package ConnectionServer.Framework;
+package Common.Framework;
 
 /**
  * Author: Keith Jackson

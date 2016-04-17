@@ -1,8 +1,10 @@
 package ConnectionServer.Framework;
 
 import java.text.ParseException;
+import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.regex.MatchResult;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -79,7 +81,7 @@ public class UriStringParser {
         return builder.toString();
     }
 
-    private String[] getVariables(String pattern) {
+    public String[] getVariables(String pattern) {
         return getMatches(regExFindVariables, pattern);
     }
 
@@ -121,5 +123,21 @@ public class UriStringParser {
                 return i;
         }
         return -1;
+    }
+
+    public Map<String, String> getVariableValues(String s) {
+        if(isMatch(s)) {
+            Map<String, String> ret = new LinkedHashMap<>();
+            for(String variable : variables) {
+                variable = variable.replace("{", "").replace("}", "");
+                ret.put(variable, getVariable(s, variable));
+            }
+            return ret;
+        }
+        return null;
+    }
+
+    public int getVariableCount() {
+        return variables.length;
     }
 }

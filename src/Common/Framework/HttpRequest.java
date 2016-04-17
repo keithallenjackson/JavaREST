@@ -1,4 +1,4 @@
-package ConnectionServer.Framework;
+package Common.Framework;
 
 import Common.Framework.Verb;
 

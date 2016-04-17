@@ -1,7 +1,7 @@
 package ConnectionServer.UnitTests;
 
-import ConnectionServer.Framework.HttpRequest;
-import ConnectionServer.Framework.HttpRequestParseException;
+import Common.Framework.HttpRequest;
+import Common.Framework.HttpRequestParseException;
 import Common.Framework.Verb;
 import Common.HttpRequestFactory;
 import org.junit.Before;
