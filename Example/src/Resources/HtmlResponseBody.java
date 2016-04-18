@@ -5,10 +5,17 @@ import Framework.HttpResponseBody;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
+/**
+ * Author: Keith Jackson
+ * Date: 4/18/2016
+ * License: MIT
+ *
+ */
+
 
 public class HtmlResponseBody extends HttpResponseBody {
 
-    ByteArrayInputStream stream;
+    private ByteArrayInputStream stream;
 
     public HtmlResponseBody(String title, String html) {
         String builder = "<!DOCTYPE html>\r\n<html>\r\n<head>\r\n<title>" +

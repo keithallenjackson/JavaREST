@@ -5,6 +5,13 @@ import Resources.HtmlResponseBody;
 
 import java.io.*;
 
+/**
+ * Author: Keith Jackson
+ * Date: 4/18/2016
+ * License: MIT
+ *
+ */
+
 
 public class ServerMain {
     public static void main(String[] args) throws IOException {
@@ -43,7 +50,7 @@ public class ServerMain {
                 }
             }
         } catch (IOException e) {
-            System.out.println(e);
+            e.printStackTrace();
         }
     }
 }
