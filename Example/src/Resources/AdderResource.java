@@ -8,16 +8,7 @@ import Framework.HttpStatusCode;
 import Framework.MimeType;
 import Framework.HttpStatusService;
 
-/**
- * Author: Keith Jackson
- * Class: CSC583
- * Semester: Fall 2015
- * Project:
- * <p>
- * Date: 4/18/2016
- * File:
- * Description:
- */
+
 public class AdderResource {
 
     @HttpVerb(value = Verb.GET)

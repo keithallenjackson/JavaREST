@@ -2,14 +2,11 @@ package Framework;
 
 /**
  * Author: Keith Jackson
- * Class: CSC583
- * Semester: Fall 2015
- * Project:
- * <p>
- * Date: 4/5/2016
- * File:
- * Description:
+ * Date: 4/18/2016
+ * License: MIT
+ *
  */
+
 public enum HttpStatusCode {
     OK, CONTINUE, SWITCHING_PROTOCOLS, CREATED, ACCEPTED, NON_AUTHORITATIVE_INFORMATION, NO_CONTENT, RESET_CONTENT,
     PARTIAL_CONTENT, MULTIPLE_CHOICES, MOVED_PERMANENTLY, FOUND, SEE_OTHER, NOT_MODIFIED, USE_PROXY, TEMPORARY_REDIRECT,

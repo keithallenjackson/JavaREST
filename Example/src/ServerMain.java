@@ -5,16 +5,7 @@ import Resources.HtmlResponseBody;
 
 import java.io.*;
 
-/**
- * Author: Keith Jackson
- * Class: CSC583
- * Semester: Fall 2015
- * Project:
- * <p>
- * Date: 3/31/2016
- * File:
- * Description:
- */
+
 public class ServerMain {
     public static void main(String[] args) throws IOException {
 

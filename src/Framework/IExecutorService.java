@@ -5,14 +5,11 @@ import java.util.concurrent.TimeUnit;
 
 /**
  * Author: Keith Jackson
- * Class: CSC583
- * Semester: Fall 2015
- * Project:
- * <p>
- * Date: 3/30/2016
- * File:
- * Description:
+ * Date: 4/18/2016
+ * License: MIT
+ *
  */
+
 public interface IExecutorService {
     void execute(Runnable run);
     void shutdown();

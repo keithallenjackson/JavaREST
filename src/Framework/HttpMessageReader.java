@@ -4,14 +4,11 @@ import java.io.*;
 
 /**
  * Author: Keith Jackson
- * Class: CSC583
- * Semester: Fall 2015
- * Project:
- * <p>
- * Date: 3/31/2016
- * File:
- * Description:
+ * Date: 4/18/2016
+ * License: MIT
+ *
  */
+
 public class HttpMessageReader extends BufferedReader {
 
     public HttpMessageReader(InputStream in) {

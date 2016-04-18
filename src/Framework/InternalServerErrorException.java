@@ -2,13 +2,10 @@ package Framework;
 
 /**
  * Author: Keith Jackson
- * Class: CSC583
- * Semester: Fall 2015
- * Project:
- * <p>
  * Date: 4/18/2016
- * File:
- * Description:
+ * License: MIT
+ *
  */
+
 public class InternalServerErrorException extends Exception {
 }

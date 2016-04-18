@@ -6,16 +6,6 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Author: Keith Jackson
- * Class: CSC583
- * Semester: Fall 2015
- * Project:
- * <p>
- * Date: 3/31/2016
- * File:
- * Description:
- */
 public class ThreadPoolWrapper implements IExecutorService {
 
 

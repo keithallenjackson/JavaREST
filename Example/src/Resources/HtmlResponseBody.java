@@ -5,16 +5,7 @@ import Framework.HttpResponseBody;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 
-/**
- * Author: Keith Jackson
- * Class: CSC583
- * Semester: Fall 2015
- * Project:
- * <p>
- * Date: 4/18/2016
- * File:
- * Description:
- */
+
 public class HtmlResponseBody extends HttpResponseBody {
 
     ByteArrayInputStream stream;
