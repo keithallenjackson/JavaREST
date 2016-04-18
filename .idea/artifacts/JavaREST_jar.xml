@@ -1,0 +1,11 @@
+<component name="ArtifactManager">
+  <artifact type="jar" name="JavaREST:jar">
+    <output-path>$PROJECT_DIR$/out/artifacts/JavaREST_jar</output-path>
+    <root id="archive" name="JavaREST.jar">
+      <element id="module-output" name="JavaREST" />
+      <element id="directory" name="META-INF">
+        <element id="file-copy" path="$PROJECT_DIR$/META-INF/MANIFEST.MF" />
+      </element>
+    </root>
+  </artifact>
+</component>
