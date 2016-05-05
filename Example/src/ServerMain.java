@@ -1,4 +1,5 @@
-import Framework.*;
+import JavaREST.Framework.*;
+import JavaREST.*;
 import Resources.AdderResource;
 import Resources.AudioResource;
 import Resources.HtmlResponseBody;

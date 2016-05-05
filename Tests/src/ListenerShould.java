@@ -1,8 +1,8 @@
-import Framework.LogFormatter;
-import Framework.Logger;
-import Framework.IExecutorService;
-import Framework.ServerSocketWrapper;
-import Framework.Listener;
+import JavaREST.Framework.LogFormatter;
+import JavaREST.Framework.Logger;
+import JavaREST.Framework.IExecutorService;
+import JavaREST.Framework.ServerSocketWrapper;
+import JavaREST.Framework.Listener;
 import com.sun.istack.internal.NotNull;
 import org.junit.After;
 import org.junit.Before;

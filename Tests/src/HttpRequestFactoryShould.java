@@ -1,10 +1,8 @@
-import Framework.HttpRequest;
-import Framework.HttpRequestParseException;
-import Framework.Verb;
-import Framework.HttpRequestFactory;
+import JavaREST.Framework.*;
 import org.junit.Before;
 import org.junit.Test;
 
+import java.io.InputStream;
 import java.net.URI;
 import java.util.Map;
 
@@ -64,6 +62,16 @@ public class HttpRequestFactoryShould {
 
             @Override
             public Map<String, String[]> getHeaders() {
+                return null;
+            }
+
+            @Override
+            public MimeType getContentType() {
+                return null;
+            }
+
+            @Override
+            public InputStream getBody() {
                 return null;
             }
         };

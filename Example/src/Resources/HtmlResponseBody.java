@@ -1,6 +1,6 @@
 package Resources;
 
-import Framework.HttpResponseBody;
+import JavaREST.Framework.HttpResponseBody;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

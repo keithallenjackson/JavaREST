@@ -1,6 +1,8 @@
-import Framework.*;
 import static org.hamcrest.core.IsEqual.*;
 import static org.hamcrest.core.Is.*;
+
+import JavaREST.Framework.*;
+import JavaREST.*;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -71,7 +73,7 @@ public class ResourceRouteShould {
     }
 
     @Test
-    public void invokeCorrectMethodAndInjectRequest() throws HttpRequestParseException, InternalServerErrorException, RouteNotFoundException{
+    public void invokeCorrectMethodAndInjectRequest() throws HttpRequestParseException, InternalServerErrorException, RouteNotFoundException {
         FakeResourceInjection fake = new FakeResourceInjection();
         ResourceRoute resourceRoute = new ResourceRoute(uri, fake);
 

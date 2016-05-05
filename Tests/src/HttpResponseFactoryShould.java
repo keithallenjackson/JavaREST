@@ -1,8 +1,8 @@
-import Framework.HttpResponse;
-import Framework.MimeType;
-import Framework.HttpResponseFactory;
-import Framework.HttpStatusCode;
-import Framework.HttpStatusService;
+import JavaREST.Framework.HttpResponse;
+import JavaREST.Framework.MimeType;
+import JavaREST.Framework.HttpResponseFactory;
+import JavaREST.Framework.HttpStatusCode;
+import JavaREST.Framework.HttpStatusService;
 import com.sun.javaws.exceptions.InvalidArgumentException;
 import org.junit.After;
 import org.junit.Before;

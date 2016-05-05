@@ -1,6 +1,6 @@
 package Resources;
 
-import Framework.*;
+import JavaREST.Framework.*;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;

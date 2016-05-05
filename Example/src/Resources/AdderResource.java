@@ -1,12 +1,12 @@
 package Resources;
 
-import Framework.HttpVerb;
-import Framework.Verb;
-import Framework.HttpResponse;
-import Framework.HttpResponseFactory;
-import Framework.HttpStatusCode;
-import Framework.MimeType;
-import Framework.HttpStatusService;
+import JavaREST.Framework.HttpVerb;
+import JavaREST.Framework.Verb;
+import JavaREST.Framework.HttpResponse;
+import JavaREST.Framework.HttpResponseFactory;
+import JavaREST.Framework.HttpStatusCode;
+import JavaREST.Framework.MimeType;
+import JavaREST.Framework.HttpStatusService;
 
 /**
  * Author: Keith Jackson

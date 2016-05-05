@@ -1,6 +1,6 @@
 package Resources;
 
-import Framework.HttpResponseBody;
+import JavaREST.Framework.HttpResponseBody;
 
 import java.io.FileInputStream;
 import java.io.IOException;

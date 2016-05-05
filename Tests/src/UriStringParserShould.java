@@ -1,4 +1,4 @@
-import Framework.UriStringParser;
+import JavaREST.Framework.UriStringParser;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -131,5 +131,11 @@ public class UriStringParserShould {
     public void notMatchAUriLongerThanThePattern() {
         parser.pattern("//");
         assertThat(parser.isMatch("/api/test1"), is(false));
+    }
+
+    @Test
+    public void notMatchASubsetOfTheUri() {
+        parser.pattern("/account");
+        assertThat(parser.isMatch("/asset/5/account"), is(false));
     }
 }
