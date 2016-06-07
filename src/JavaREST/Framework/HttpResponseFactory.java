@@ -1,7 +1,5 @@
 package JavaREST.Framework;
 
-import sun.plugin.dom.exception.InvalidStateException;
-
 import java.util.LinkedHashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -76,14 +74,14 @@ public class HttpResponseFactory {
 
 
     // build
-    public HttpResponse build() throws InvalidStateException {
+    public HttpResponse build() throws IllegalStateException {
         // validation
         if(protocol == null || protocol.isEmpty())
-            throw new InvalidStateException("Variable 'protocol' cannot be empty or null");
+            throw new IllegalStateException("Variable 'protocol' cannot be empty or null");
         if(version == null || version.isEmpty())
-            throw new InvalidStateException("Variable 'version' cannot be empty or null");
-        if(this.status == null) throw new InvalidStateException("Variable 'status' cannot be null");
-        if(this.contentType == null) throw new InvalidStateException("Variable 'contentType cannot be null");
+            throw new IllegalStateException("Variable 'version' cannot be empty or null");
+        if(this.status == null) throw new IllegalStateException("Variable 'status' cannot be null");
+        if(this.contentType == null) throw new IllegalStateException("Variable 'contentType cannot be null");
 
         // creation
         return new HttpResponse(protocol, version, status, contentType, headers, body);

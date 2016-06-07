@@ -1,7 +1,5 @@
 package JavaREST.Framework;
 
-import com.sun.istack.internal.NotNull;
-
 import java.io.IOException;
 import java.net.Socket;
 import java.util.concurrent.TimeUnit;
@@ -22,9 +20,9 @@ public abstract class Listener implements Runnable {
     private boolean shouldRun = false;
     protected Thread manager;
 
-    public Listener(@NotNull ServerSocketWrapper wrapper,
-                    @NotNull IExecutorService executor,
-                    @NotNull Logger logger) {
+    public Listener(ServerSocketWrapper wrapper,
+                    IExecutorService executor,
+                    Logger logger) {
         this.wrapper = wrapper;
         this.executor = executor;
         this.logger = logger;

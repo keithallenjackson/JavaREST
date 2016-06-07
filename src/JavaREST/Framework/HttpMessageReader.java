@@ -1,8 +1,6 @@
 package JavaREST.Framework;
 
 import java.io.*;
-import java.util.LinkedList;
-import java.util.List;
 
 /**
  * Author: Keith Jackson

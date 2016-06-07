@@ -1,7 +1,6 @@
 package JavaREST.Wrappers;
 
 import JavaREST.Framework.ServerSocketWrapper;
-import com.sun.istack.internal.NotNull;
 
 import java.io.IOException;
 import java.net.InetAddress;
@@ -17,7 +16,7 @@ public class ServerSocketWrap extends ServerSocket implements ServerSocketWrappe
         super(port, backlog);
     }
 
-    public ServerSocketWrap(int port, int backlog, @NotNull InetAddress bindAddress) throws IOException {
+    public ServerSocketWrap(int port, int backlog, InetAddress bindAddress) throws IOException {
         super(port, backlog, bindAddress);
     }
 }

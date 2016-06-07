@@ -3,7 +3,6 @@ package JavaREST;
 import JavaREST.Framework.*;
 import JavaREST.Wrappers.ServerSocketWrap;
 import JavaREST.Wrappers.ThreadPoolWrapper;
-import com.sun.istack.internal.NotNull;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -25,11 +24,11 @@ public class HttpListener extends Listener {
     private HttpStatusService statusService;
     private static int threadId = 0;
 
-    public HttpListener(@NotNull ServerSocketWrapper wrapper,
-                        @NotNull IExecutorService executor,
-                        @NotNull Router router,
-                        @NotNull Logger logger,
-                        @NotNull HttpStatusService statusService) {
+    public HttpListener(ServerSocketWrapper wrapper,
+                        IExecutorService executor,
+                        Router router,
+                        Logger logger,
+                        HttpStatusService statusService) {
 
         super(wrapper, executor, logger);
         this.router = router;

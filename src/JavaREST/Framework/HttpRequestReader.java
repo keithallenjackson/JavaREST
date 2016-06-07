@@ -1,7 +1,5 @@
 package JavaREST.Framework;
 
-import com.sun.istack.internal.NotNull;
-
 import java.io.*;
 
 /**
@@ -16,7 +14,7 @@ public class HttpRequestReader {
 
     private HttpMessageReader reader;
 
-    public HttpRequestReader(@NotNull HttpMessageReader reader) {
+    public HttpRequestReader(HttpMessageReader reader) {
         this.reader = reader;
     }
 
